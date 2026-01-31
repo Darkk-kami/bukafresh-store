@@ -16,4 +16,4 @@ applications:
       cache:
         paths:
           - .npm/**/*
-    appRoot: bukafresh-connect
+    appRoot: bukafresh_frontend
