@@ -1,6 +1,7 @@
 package com.dark_store.bukafresh_backend.service.impl;
 
 import com.dark_store.bukafresh_backend.model.User;
+import org.springframework.beans.factory.annotation.Value;
 import com.dark_store.bukafresh_backend.service.SecurityAlertService;
 import com.dark_store.bukafresh_backend.service.emailService.EmailDetails;
 import com.dark_store.bukafresh_backend.service.emailService.IEmailService;
@@ -11,10 +12,16 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-@RequiredArgsConstructor
 public class SecurityAlertServiceImpl implements SecurityAlertService {
 
     private final IEmailService emailService;
+    private final String frontendUrl;
+
+    public SecurityAlertServiceImpl(IEmailService emailService,
+                                    @Value("${frontend_url}") String frontendUrl) {
+        this.emailService = emailService;
+        this.frontendUrl = frontendUrl;
+    }
 
     @Async
     @Override
@@ -53,7 +60,7 @@ public class SecurityAlertServiceImpl implements SecurityAlertService {
     @Override
     public void SendEmailVerificationToNewUser(User savedUser, String token) {
         String userId = savedUser.getId();
-        String verificationUrl = String.format("http://localhost:5174/verify-email?userId=%s&token=%s", userId, token);
+        String verificationUrl = String.format("%s/verify-email?userId=%s&token=%s", frontendUrl, userId, token);
         System.out.println("verification url: " + verificationUrl);
 
         String htmlBody = """
