@@ -1,0 +1,34 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      "@shared": path.resolve(__dirname, "src/shared"),
+      "@app": path.resolve(__dirname, "src/app"),
+      "@features": path.resolve(__dirname, "src/features"),
+      "@pages": path.resolve(__dirname, "src/pages"),
+      "@ui": path.resolve(__dirname, "src/shared/ui"),
+      "@auth": path.resolve(__dirname, "src/auth"),
+    },
+  },
+
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "https://insolify.com/core",
+  //       changeOrigin: true,
+  //       secure: false, // Enable for HTTPS
+  //       rewrite: (path) => path.replace(/^\/api/, ""),
+  //     },
+  //   },
+  // },
+});
